@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
@@ -17,5 +17,5 @@ class Question extends Model
     public function replies(){
         return $this->hasMany(Reply::class);
     }
-    
+
 }

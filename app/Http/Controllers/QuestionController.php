@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Question;
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Response;
+use App\Http\Resources;
+use App\Http\Resources\QuestionResource;
 class QuestionController extends Controller
 {
     /**
@@ -14,18 +16,10 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        //
+        // return Question::all();
+        return QuestionResource::collection(Question::latest()->get());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -35,7 +29,19 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $question = new Question();
+        // $question->title = $request->input('title');
+        // $question->slug = $request->input('slug');
+        // $question->body = $request->input('body');
+        // $question->category_id = $request->input('category_id');
+        // $question->user_id = $request->input('user_id');
+
+        // $question->save();
+
+        // auth()->user()->questions()->create($request->all());
+        Question::create($request->all());
+
+        return response('Created',Response::HTTP_CREATED);
     }
 
     /**
@@ -46,19 +52,10 @@ class QuestionController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        // return Question::find($question);
+        return new QuestionResource($question);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Question  $question
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Question $question)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -69,7 +66,9 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-        //
+        $question->update($request->all());
+
+        return response('Updated',Response::HTTP_ACCEPTED);
     }
 
     /**
@@ -80,6 +79,9 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
-        //
+        // return Question::find($id)->delete();
+        $question->delete(); 
+        // return response('Deleted',201);
+        return response(null,Response::HTTP_NO_CONTENT);
     }
 }

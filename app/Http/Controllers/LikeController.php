@@ -8,6 +8,10 @@ use Illuminate\Http\Response;
 use App\Models\Reply;
 class LikeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('JWT');
+    }
 
     public function like(Reply $reply){
         $reply->like()->create([

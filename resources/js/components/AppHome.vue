@@ -1,16 +1,18 @@
 <template>
     <div>
-        <h1>Home</h1>
-
+        <router-view></router-view>
         <appfooter></appfooter>
+        
     </div>
 </template>
 
 <script>
 import appfooter from './layouts/AppFooter.vue'
+import login from './login/Login.vue'
 export default {
     components : {
-        appfooter
+        appfooter,
+        login
     }
 }
 </script>

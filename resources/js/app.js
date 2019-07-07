@@ -5,6 +5,7 @@
  */
 
 require('./bootstrap');
+const axios = require('axios');
 
 import Vue from 'vue'
 import Vuetify from 'vuetify'

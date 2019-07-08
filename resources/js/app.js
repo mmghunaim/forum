@@ -10,7 +10,7 @@ Vue.use(Vuetify);
 import User from './Helpers/User'
 window.User = User;
 
-console.log(User.userId());
+window.eventBus = new Vue({})
 
 window.Vue = require('vue');
 

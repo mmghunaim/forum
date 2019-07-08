@@ -15,11 +15,20 @@ class User{
             .then(function(response) {
                 if (Token.completeIsValid(response.data.access_token)) {
                     AppStorage.store(response.data.user,response.data.access_token)
+                    // window.location.assign('/forum')
                 }
             })
             .catch(function (error) {
                 console.log('fuck you');
             });
+    }
+
+    sotreAfterResponse(response){
+        if (Token.completeIsValid(response.data.access_token)) {
+            AppStorage.store(response.data.user,response.data.access_token)
+            // this.$router.push({name : 'forum'})
+            window.location.assign('/forum')
+        }
     }
 
     hasToken(){
@@ -39,6 +48,7 @@ class User{
 
     logout(){
         AppStorage.clear()
+        window.location.assign('/forum')     
     }
 
     userName(){

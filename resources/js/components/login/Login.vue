@@ -23,6 +23,7 @@
             >
                 Login
             </v-btn>
+            <router-link to="/signup"><v-btn color="blue">Sign up</v-btn></router-link>
         </v-flex>
       </v-layout>
     </v-container>
@@ -39,9 +40,16 @@ export default {
             ]
         }
     },
+    created(){
+      if(User.isLoggedIn()){
+        this.$router.push({name : 'forum'})
+      }
+    },
     methods : {
         login(){
             User.login(this.user)
+            window.location.assign('/forum')
+            // this.$router.push({name : 'forum'})
         }
     }
 }

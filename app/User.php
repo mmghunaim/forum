@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Models\Question;
+use App\Models\Category;
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
@@ -40,6 +41,9 @@ class User extends Authenticatable implements JWTSubject
 
     public function questions(){
         return $this->hasMany(Question::class);
+    }
+    public function categories(){
+        return $this->hasMany(Category::class);
     }
 
     // Rest omitted for brevity

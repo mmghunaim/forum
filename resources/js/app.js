@@ -4,6 +4,7 @@ require('./bootstrap');
 const axios = require('axios');
 const token = 'Bearer '+localStorage.getItem('token');
 window.axios.defaults.headers.common['Authorization'] = token
+// window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 

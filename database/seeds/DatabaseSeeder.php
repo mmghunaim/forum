@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         factory(Reply::class, 10)
            ->create()
            ->each(function ($reply) {
-                $reply->likes()->save(factory(Like::class)->make());
+                $reply->like()->save(factory(Like::class)->make());
             });
     }
 }

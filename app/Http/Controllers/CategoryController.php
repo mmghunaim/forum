@@ -22,12 +22,9 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         // Category::create($request->all());
-        $category = new Category;
-        $category->name = $request->input('name');
-        $category->slug = str_slug($request->input('name'));
-        $category->save();
-
-        return response('Created',Response::HTTP_CREATED);
+        $request['slug'] = str_slug($request->input('name'));
+        $category = auth()->user()->categories()->create($request->all());
+        return response(new CategoryResource($category),Response::HTTP_CREATED);
     }
 
     public function show(Category $category)
@@ -45,7 +42,7 @@ class CategoryController extends Controller
         //     'name' => $request->input('name'),
         //     'slug' => str_slug($request->input('name'))
         // ]);
-        return response('Updated',Response::HTTP_ACCEPTED);
+        return response(new CategoryResource($category),Response::HTTP_ACCEPTED);
     }
 
     public function destroy(Category $category)

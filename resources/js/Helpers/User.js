@@ -4,23 +4,14 @@ class User{
     login(user){
         let myemail = user.email
             let mypass = user.password            
-            axios({
-                method: 'post',
-                url: '/api/auth/login',
-                data: {
-                    email: myemail,
-                    password: mypass
-                }
-            })
-            .then(function(response) {
-                if (Token.completeIsValid(response.data.access_token)) {
-                    AppStorage.store(response.data.user,response.data.access_token)
+            axios.post('/api/auth/login',user)
+            .then((response)=>{
+                // if (Token.completeIsValid(response.data.access_token)) {
+                //     AppStorage.store(response.data.user,response.data.access_token)
                     // window.location.assign('/forum')
-                }
+                    console.log(res)
             })
-            .catch(function (error) {
-                console.log(error);
-            });
+            .catch((err)=>{console.log(err.response)});
     }
 
     sotreAfterResponse(response){
@@ -66,6 +57,10 @@ class User{
 
     own(id){
         return this.userId() == id
+    }
+
+    admin(){
+        return this.userId() == 15;
     }
 }
 

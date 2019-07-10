@@ -10,6 +10,7 @@ import Logout  from '../components/login/Logout'
 import ReadQuestion from '../components/layouts/ReadQuestion'
 import AskQuestion from '../components/layouts/AskQuestion'
 import EditQuestion from '../components/layouts/EditQuestion'
+import Category from '../components/layouts/createCategory'
 const routes = [
     { path: '/login', component: Login },
     { path: '/logout' , component: Logout},
@@ -17,7 +18,8 @@ const routes = [
     { path: '/forum' , component: Forum , name:'forum'},
     { path: '/question/:slug' , component: ReadQuestion , name:'readquestion'},
     { path: '/askquestion' , component : AskQuestion},
-    { path : '/editquestion' , component : EditQuestion }
+    { path : '/editquestion' , component : EditQuestion },
+    { path : '/category' , component : Category }
     
 ]
 

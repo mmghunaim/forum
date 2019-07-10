@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\Question;
+use App\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Resources;
@@ -9,7 +11,7 @@ class QuestionController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('JWT', ['except' => ['index','show']]);
+        $this->middleware('JWT', ['except' => ['index','show','createuser']]);
     }
     
     /**
@@ -76,5 +78,11 @@ class QuestionController extends Controller
         $question->delete(); 
         // return response('Deleted',201);
         return response(null,Response::HTTP_NO_CONTENT);
+    }
+
+    public function createuser(Request $request){
+        $request['password'] = Hash::make($request->input('password'));
+        User::create($request->all());
+        return response('created',Response::HTTP_CREATED);
     }
 }

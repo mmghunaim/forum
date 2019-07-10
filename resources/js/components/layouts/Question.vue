@@ -1,6 +1,7 @@
 <template>
   <v-layout>
     <v-flex xs12 >
+        
         <router-link :to="data.path">
             <v-card>
                 <v-card-title primary-title>

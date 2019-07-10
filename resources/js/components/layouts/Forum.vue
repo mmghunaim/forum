@@ -8,29 +8,40 @@
             :data = question
             ></question>
       </v-flex>
-      Category
+      <v-flex xs4>
+          <sidbar :data = categories></sidbar>
+      </v-flex>
     </v-layout> 
    </v-container>    
 </template>
 <script>
 import question from './question'
+import sidbar from './CategorySidebar'
 export default {
     components : {
-        question
+        question,
+        sidbar
     },
     data() {
         return {
-            questions : {}
+            questions : {},
+            categories : {}
         }
     },
     created() {
+        this.fetchCategories()
         this.fetchQuestions()
     },
     methods: {
         fetchQuestions(){
-            axios.get('api/question')
+            axios.get('/api/question')
             .then(res => this.questions = res.data.data)
             .then(err => console.log(err))
+        },
+        fetchCategories(){
+            axios.get('/api/category')
+            .then(res => this.categories = res.data.data)
+            .catch(err => console.log(err))
         }
     },
 }

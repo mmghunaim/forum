@@ -25,7 +25,7 @@ export default {
       items : [
         {title : 'Forum' , to : '/forum' , show : true},
         {title : 'Ask Question' , to : '/askquestion' , show : User.isLoggedIn()},
-        {title : 'Category' , to : '/gategory' , show : User.isLoggedIn()},
+        {title : 'Category' , to : '/category' , show : User.admin()},
         {title : 'Login' , to : '/login' , show : !User.isLoggedIn()},
         {title : 'Logout' , to : '/logout' , show : User.isLoggedIn()}
       ]

@@ -48,7 +48,7 @@ export default {
     methods : {
         login(){
             User.login(this.user)
-            window.location.assign('/forum')
+            // window.location.assign('/forum')
             // this.$router.push({name : 'forum'})
         }
     }

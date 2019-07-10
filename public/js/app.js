@@ -2295,15 +2295,6 @@ __webpack_require__.r(__webpack_exports__);
     this.fetchCategories();
   },
   methods: {
-    createCategory: function createCategory() {
-      var self = this;
-      axios.post('/api/category', this.category).then(function (res) {
-        this.categories.unshift(res.data);
-        self.category.name = '';
-      })["catch"](function (err) {
-        return console.log(err);
-      });
-    },
     fetchCategories: function fetchCategories() {
       var _this = this;
 
@@ -2313,11 +2304,20 @@ __webpack_require__.r(__webpack_exports__);
         return console.log(err);
       });
     },
+    createCategory: function createCategory() {
+      var self = this;
+      axios.post('/api/category', this.category).then(function (res) {
+        this.categories.unshift(res.data);
+        self.category.name = '';
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    },
     deleteCategory: function deleteCategory(category) {
       var _this2 = this;
 
       axios["delete"]('/api/category/' + category.slug).then(function (res) {
-        return _this2.categories.splice(index, 1);
+        _this2.fetchCategories();
       })["catch"](function (err) {
         return console.log(err);
       });
@@ -2328,8 +2328,13 @@ __webpack_require__.r(__webpack_exports__);
       this.edit = true;
     },
     updateCategory: function updateCategory(slug) {
-      axios.put('/api/category/' + slug).then(function (res) {
-        return console.log('updated');
+      var _this3 = this;
+
+      axios.put('/api/category/' + slug, this.category).then(function (res) {
+        _this3.fetchCategories();
+
+        _this3.edit = false;
+        _this3.category.name = '';
       })["catch"](function (err) {
         return console.log(err);
       });
@@ -99548,7 +99553,7 @@ function () {
   }, {
     key: "userId",
     value: function userId() {
-      if (this.isLoggedIn) {
+      if (this.isLoggedIn()) {
         var payload = _Token__WEBPACK_IMPORTED_MODULE_0__["default"].payload(_AppStorage__WEBPACK_IMPORTED_MODULE_1__["default"].getToken());
         return payload.sub;
       }

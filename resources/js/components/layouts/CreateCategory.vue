@@ -62,6 +62,11 @@ export default {
         this.fetchCategories()
     },
     methods: {
+        fetchCategories(){
+            axios.get('/api/category')
+            .then(res => this.categories = res.data.data)
+            .catch(err => console.log(err))
+        },
         createCategory(){
             let self = this
             axios.post('/api/category',this.category)
@@ -71,14 +76,11 @@ export default {
             })
             .catch(err => console.log(err))
         },
-        fetchCategories(){
-            axios.get('/api/category')
-            .then(res => this.categories = res.data.data)
-            .catch(err => console.log(err))
-        },
         deleteCategory(category){
             axios.delete('/api/category/'+category.slug)
-            .then(res => this.categories.splice(index,1))
+            .then(res => {
+                this.fetchCategories();
+            })
             .catch(err => console.log(err))
         },
         editCategory(category){
@@ -87,8 +89,12 @@ export default {
             this.edit = true 
         },
         updateCategory(slug){
-            axios.put('/api/category/'+slug)
-            .then(res => console.log('updated'))
+            axios.put('/api/category/'+slug,this.category)
+            .then(res =>{
+                this.fetchCategories();
+                this.edit = false;
+                this.category.name = '';
+            })
             .catch(err => console.log(err))
 
         }

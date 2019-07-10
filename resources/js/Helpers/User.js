@@ -49,7 +49,7 @@ class User{
     }
 
     userId(){
-        if(this.isLoggedIn){
+        if(this.isLoggedIn()){
             const payload = Token.payload(AppStorage.getToken())
             return payload.sub
         }

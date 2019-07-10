@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -24,8 +22,6 @@ class QuestionController extends Controller
         // return Question::all();
         return QuestionResource::collection(Question::latest()->get());
     }
-
-
     /**
      * Store a newly created resource in storage.
      *
@@ -40,15 +36,11 @@ class QuestionController extends Controller
         // $question->body = $request->input('body');
         // $question->category_id = $request->input('category_id');
         // $question->user_id = $request->input('user_id');
-
         // $question->save();
-
-        // auth()->user()->questions()->create($request->all());
-        Question::create($request->all());
-
-        return response('Created',Response::HTTP_CREATED);
+        $question = auth()->user()->questions()->create($request->all());
+        // Question::create($request->all());
+        return response(new QuestionResource($question),Response::HTTP_CREATED);
     }
-
     /**
      * Display the specified resource.
      *
@@ -60,8 +52,6 @@ class QuestionController extends Controller
         // return Question::find($question);
         return new QuestionResource($question);
     }
-
-
     /**
      * Update the specified resource in storage.
      *
@@ -72,10 +62,8 @@ class QuestionController extends Controller
     public function update(Request $request, Question $question)
     {
         $question->update($request->all());
-
         return response('Updated',Response::HTTP_ACCEPTED);
     }
-
     /**
      * Remove the specified resource from storage.
      *

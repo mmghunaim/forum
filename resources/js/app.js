@@ -1,7 +1,9 @@
 
 require('./bootstrap');
-const axios = require('axios');
 
+const axios = require('axios');
+const token = 'Bearer '+localStorage.getItem('token');
+window.axios.defaults.headers.common['Authorization'] = token
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 
@@ -12,15 +14,17 @@ window.User = User;
 
 window.eventBus = new Vue({})
 
+
+import VueSimplemde from 'vue-simplemde'
+import 'simplemde/dist/simplemde.min.css'
+Vue.use(VueSimplemde)
+import md from 'marked'
+window.md = md
 window.Vue = require('vue');
 
 Vue.component('apphome', require('./components/AppHome.vue').default);
 Vue.component('toolbar', require('./components/layouts/Toolbar.vue').default);
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+
 import router from './Router/router.js'
 const app = new Vue({
     el: '#app',

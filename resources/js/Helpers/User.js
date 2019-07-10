@@ -19,7 +19,7 @@ class User{
                 }
             })
             .catch(function (error) {
-                console.log('fuck you');
+                console.log(error);
             });
     }
 
@@ -62,6 +62,10 @@ class User{
             const payload = Token.payload(AppStorage.getToken())
             return payload.sub
         }
+    }
+
+    own(id){
+        return this.userId() == id
     }
 }
 

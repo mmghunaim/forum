@@ -9,11 +9,11 @@ use Faker\Generator as Faker;
 
 $factory->define(Reply::class, function (Faker $faker) {
     return [
-        'body'          => $faker->text(40),
+        'body'          => $faker->text(80),
         'question_id'   => function(){
             return Question::all()->random();
         },
-        'user_id'       => function(){
+        'user_id'   => function(){
             return User::all()->random();
         }
     ];

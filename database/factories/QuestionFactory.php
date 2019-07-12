@@ -8,11 +8,11 @@ use App\User;
 use Faker\Generator as Faker;
 
 $factory->define(Question::class, function (Faker $faker) {
-    $title = $faker->text(10);
+    $title = $faker->text(20);
     return [
         'title'         => $title,
         'slug'          => Str::slug($title),
-        'body'          => $faker->text(40),
+        'body'          => $faker->text(100),
         'category_id'   => function(){
             return Category::all()->random();
         },

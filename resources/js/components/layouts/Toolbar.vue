@@ -3,6 +3,7 @@
     <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
     <v-toolbar-title>Laravel Real Time App</v-toolbar-title>
     <v-spacer></v-spacer>
+    <appnotification v-if="isLogged"></appnotification>
     <div class="hidden-sm-and-down">
 
       <router-link
@@ -19,6 +20,7 @@
 </template>
 
 <script>
+import appnotification from './AppNotification'
 export default {
   data() {
     return {
@@ -28,8 +30,12 @@ export default {
         {title : 'Category' , to : '/category' , show : User.admin()},
         {title : 'Login' , to : '/login' , show : !User.isLoggedIn()},
         {title : 'Logout' , to : '/logout' , show : User.isLoggedIn()}
-      ]
+      ],
+      isLogged : User.isLoggedIn()
     }
+  },
+  components : {
+    appnotification
   },
   created() {
     // eventBus.$on('logout'),()=>{

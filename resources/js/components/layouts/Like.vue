@@ -15,6 +15,16 @@ export default {
             count : this.reply.like_count
         }
     },
+    created(){
+        Echo.channel('likeChannel')
+        .listen('.LikeEvent', (e) => {
+            if (e.id == this.reply.id) {
+                e.type == 1 ? this.count++ : this.count--
+            }
+        });
+        console.log('fuck');
+        
+    },
     computed:{
         color(){
             return this.isLiked ? 'red' : 'red lighten-4';
@@ -26,6 +36,7 @@ export default {
                 this.isLiked ? this.dec() : this.inc()
                 this.isLiked = !this.isLiked
             }
+            
         },
         inc(){
             axios.post('/api/like/'+this.reply.id)

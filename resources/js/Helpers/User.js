@@ -2,16 +2,25 @@ import Token from "./Token";
 import AppStorage from './AppStorage'
 class User{
     login(user){
-        let myemail = user.email
-            let mypass = user.password            
-            axios.post('/api/auth/login',user)
-            .then((response)=>{
+        let myemail = this.user.email
+            let mypass = this.user.password
+            axios({
+                method: 'post',
+                url: '/api/auth/login',
+                data: {
+                    email: myemail,
+                    password: mypass
+                }
+            })
+            .then(res => 
+                console.log(res.data) 
                 // if (Token.completeIsValid(response.data.access_token)) {
                 //     AppStorage.store(response.data.user,response.data.access_token)
                     // window.location.assign('/forum')
-                    console.log(res)
-            })
-            .catch((err)=>{console.log(err.response)});
+            )
+            .catch(function (error) {
+                console.log('fuck you');
+            });
     }
 
     sotreAfterResponse(response){

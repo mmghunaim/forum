@@ -47,9 +47,22 @@ export default {
     },
     methods : {
         login(){
-            User.login(this.user)
-            // window.location.assign('/forum')
-            // this.$router.push({name : 'forum'})
+            let myemail = this.user.email
+            let mypass = this.user.password
+            axios({
+                method: 'post',
+                url: '/api/auth/login',
+                data: {
+                    email: myemail,
+                    password: mypass
+                }
+            })
+            .then(res => 
+                console.log(res.data) 
+            )
+            .catch(function (error) {
+                console.log('fuck you');
+            });
         }
     }
 }

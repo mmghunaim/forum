@@ -20,12 +20,13 @@ Route::post('/markAsRead','NotificationsController@markAsRead');
 
 Route::group([
 
-    'middleware' => 'api',
+    // 'middleware' => 'api',
     'prefix' => 'auth'
 
-], function ($router) {
+], function () {
 
     Route::post('login', 'AuthController@login');
+    Route::post('forceLogin','AuthController@forceLogin');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');

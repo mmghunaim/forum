@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Resources;
 use App\Http\Resources\QuestionResource;
+use Illuminate\Support\Facades\Redis;
+
 class QuestionController extends Controller
 {
     public function __construct()
@@ -22,6 +24,11 @@ class QuestionController extends Controller
     public function index()
     {
         // return Question::all();
+        // if ($questions = Redis::get('questions.all')) {
+        //     return QuestionResource::collection($questions);
+        // }
+        // $questions = Question::latest()->get();
+        // Redis::set('questions.all',$questions);
         return QuestionResource::collection(Question::latest()->get());
     }
     /**

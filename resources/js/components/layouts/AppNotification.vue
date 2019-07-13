@@ -36,6 +36,12 @@ export default {
         if (User.isLoggedIn()) {
             this.getNotifications();
         }
+
+        Echo.private('App.User.' + User.userId())
+            .notification((notification) => {
+                this.unread.unshift(notification)
+                this.unreadCount++
+            });
     },
     computed:{
         color(){

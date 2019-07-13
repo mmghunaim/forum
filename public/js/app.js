@@ -1783,9 +1783,17 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
+    var _this = this;
+
     if (User.isLoggedIn()) {
       this.getNotifications();
     }
+
+    Echo["private"]('App.User.' + User.userId()).notification(function (notification) {
+      _this.unread.unshift(notification);
+
+      _this.unreadCount++;
+    });
   },
   computed: {
     color: function color() {
@@ -1794,21 +1802,21 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getNotifications: function getNotifications() {
-      var _this = this;
+      var _this2 = this;
 
       axios.post('/api/notifications').then(function (res) {
-        _this.read = res.data.read;
-        _this.unread = res.data.unread;
-        _this.unreadCount = res.data.unread.length;
+        _this2.read = res.data.read;
+        _this2.unread = res.data.unread;
+        _this2.unreadCount = res.data.unread.length;
       })["catch"](function (err) {
         return console.log(err);
       });
     },
     markAsRead: function markAsRead(notify) {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.post('/api/markAsRead/', notify).then(function (res) {
-        _this2.getNotifications();
+        _this3.getNotifications();
       });
     }
   }
@@ -2427,10 +2435,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      replyItself: this.QuestionReplies.replies
+    };
+  },
   components: {
     reply: _ShowReply__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ['QuestionReplies']
+  created: function created() {
+    this.listen();
+  },
+  props: ['QuestionReplies'],
+  methods: {
+    listen: function listen() {
+      var _this = this;
+
+      Echo["private"]('App.User.' + User.userId()).notification(function (notification) {
+        _this.replyItself.unshift(notification.reply);
+      });
+      Echo.channel('deleteReplyChannel').listen('.DeleteReplyEvent', function (e) {
+        for (var index = 0; index < _this.replyItself.length; index++) {
+          if (_this.replyItself[index].id == e.id) {
+            _this.replyItself.splice(index, 1);
+          }
+        }
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -110727,6 +110759,8 @@ try {
 
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+var JWTtoken = 'Bearer ' + localStorage.getItem('token');
+window.axios.defaults.headers.common['Authorization'] = JWTtoken;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
@@ -110754,7 +110788,12 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
   key: "30a9425c83f898c5719e",
   cluster: "ap2",
-  encrypted: true
+  encrypted: true,
+  auth: {
+    headers: {
+      Authorization: JWTtoken
+    }
+  }
 });
 
 /***/ }),

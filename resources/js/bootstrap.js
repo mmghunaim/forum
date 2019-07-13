@@ -20,7 +20,8 @@ try {
  */
 
 window.axios = require('axios');
-
+const JWTtoken = 'Bearer '+localStorage.getItem('token');
+window.axios.defaults.headers.common['Authorization'] = JWTtoken
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**
@@ -51,6 +52,11 @@ window.Echo = new Echo({
     broadcaster: 'pusher',
     key: "30a9425c83f898c5719e",
     cluster: "ap2",
-    encrypted: true
+    encrypted: true,
+    auth: {
+        headers : {
+            Authorization : JWTtoken
+        }
+    }
 });
 

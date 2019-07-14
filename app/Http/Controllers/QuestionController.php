@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use App\Http\Resources;
 use App\Http\Resources\QuestionResource;
 use Illuminate\Support\Facades\Redis;
+use App\Http\Requests\QuestionRequest;
 
 class QuestionController extends Controller
 {
@@ -37,7 +38,7 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(QuestionRequest $request)
     {
         // $question = new Question();
         // $question->title = $request->input('title');
@@ -68,7 +69,7 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(QuestionRequest $request, Question $question)
     {
         $question->update($request->all());
         return response('Updated',Response::HTTP_ACCEPTED);
@@ -87,7 +88,7 @@ class QuestionController extends Controller
         return response(null,Response::HTTP_NO_CONTENT);
     }
 
-    public function createuser(Request $request){
+    public function createuser(QuestionRequest $request){
         $request['password'] = Hash::make($request->input('password'));
         User::create($request->all());
         return response('created',Response::HTTP_CREATED);

@@ -1,7 +1,11 @@
 <template>
-  <v-toolbar>
+  <v-toolbar class="blue lighten-2" dark>
     <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
-    <v-toolbar-title>Laravel Real Time App</v-toolbar-title>
+    <v-toolbar-title>
+        <router-link to="/" class="white--text">
+        Laravel Real Time App
+        </router-link>
+      </v-toolbar-title>
     <v-spacer></v-spacer>
     <appnotification v-if="isLogged"></appnotification>
     <div class="hidden-sm-and-down">

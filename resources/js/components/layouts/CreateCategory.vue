@@ -1,18 +1,19 @@
 <template>
     <v-container>
-        <v-form @submit.prevent="edit ? updateCategory(category.slug) : createCategory">
+        <v-alert type="error" :value="true" v-if="errors">some fileds are required</v-alert>
+        <v-form @submit.prevent="edit ? updateCategory(category.slug) : createCategory()">
             <v-text-field
             v-model="category.name"
             label="Category Name ..."
             required
           ></v-text-field>
         
-        <v-btn type="submit" v-show="!edit">Create Category</v-btn>
-        <v-btn type="submit" v-show="edit">Update Category</v-btn>
+        <v-btn type="submit" v-show="!edit" :disabled="disabled">Create Category</v-btn>
+        <v-btn type="submit" v-show="edit"  :disabled="disabled">Update Category</v-btn>
         </v-form>
 
-        <v-card>
-            <v-toolbar color="indigo" dark> 
+        <v-card class="mt-5">
+            <v-toolbar color="#1E88E5"  dark> 
                 <v-toolbar-title>Categories</v-toolbar-title>
             </v-toolbar>  
 
@@ -51,8 +52,9 @@ export default {
                 name : '',
                 slug : ''
             },
-            categories : {},
-            edit : false
+            categories : [],
+            edit : false,
+            errors : null
         }
     },
     created(){
@@ -60,6 +62,11 @@ export default {
             this.$router.push('/forum')
         }
         this.fetchCategories()
+    },
+    computed: {
+        disabled(){
+            return !(this.category.name)
+        }
     },
     methods: {
         fetchCategories(){
@@ -69,12 +76,12 @@ export default {
         },
         createCategory(){
             let self = this
-            axios.post('/api/category',this.category)
+            axios.post('/api/category',self.category)
             .then(function(res){
-                this.categories.unshift(res.data)
+                self.categories.unshift(res.data)
                 self.category.name = ''
             })
-            .catch(err => console.log(err))
+            .catch(err => this.errors = err.response.data.errors)
         },
         deleteCategory(category){
             axios.delete('/api/category/'+category.slug)

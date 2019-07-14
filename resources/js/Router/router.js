@@ -11,7 +11,9 @@ import ReadQuestion from '../components/layouts/ReadQuestion'
 import AskQuestion from '../components/layouts/AskQuestion'
 import EditQuestion from '../components/layouts/EditQuestion'
 import Category from '../components/layouts/createCategory'
+import Parallex from '../components/Parallex'
 const routes = [
+    { path: '/'     , component: Parallex},
     { path: '/login', component: Login },
     { path: '/logout' , component: Logout},
     { path: '/signup' , component: Signup },

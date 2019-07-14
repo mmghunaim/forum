@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Resources\CategoryResource;
+use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -19,7 +20,7 @@ class CategoryController extends Controller
         return CategoryResource::collection(Category::latest()->get());
     }
 
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         // Category::create($request->all());
         $request['slug'] = str_slug($request->input('name'));
@@ -32,7 +33,7 @@ class CategoryController extends Controller
         return new CategoryResource($category);
     }
 
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
     {
         $category->name = $request->input('name');
         $category->slug = str_slug($request->input('name'));

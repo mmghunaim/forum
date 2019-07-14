@@ -2897,20 +2897,23 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     login: function login() {
-      var myemail = this.user.email;
-      var mypass = this.user.password;
-      axios({
-        method: 'post',
-        url: '/api/auth/login',
-        data: {
-          email: myemail,
-          password: mypass
-        }
-      }).then(function (res) {
-        return console.log(res.data);
-      })["catch"](function (error) {
-        console.log('fuck you');
-      });
+      // let myemail = this.user.email
+      // let mypass = this.user.password
+      // axios({
+      //     method: 'post',
+      //     url: '/api/auth/login',
+      //     data: {
+      //         email: myemail,
+      //         password: mypass
+      //     }
+      // })
+      // .then(res => 
+      //     console.log(res.data) 
+      // )
+      // .catch(function (error) {
+      //     console.log('fuck you');
+      // });
+      User.login(this.user);
     }
   }
 });
@@ -110760,8 +110763,10 @@ function () {
   _createClass(User, [{
     key: "login",
     value: function login(user) {
-      var myemail = this.user.email;
-      var mypass = this.user.password;
+      var _this = this;
+
+      var myemail = user.email;
+      var mypass = user.password;
       axios({
         method: 'post',
         url: '/api/auth/login',
@@ -110770,11 +110775,11 @@ function () {
           password: mypass
         }
       }).then(function (res) {
-        return console.log(res.data);
-      } // if (Token.completeIsValid(response.data.access_token)) {
-      //     AppStorage.store(response.data.user,response.data.access_token)
-      // window.location.assign('/forum')
-      )["catch"](function (error) {
+        // if (Token.completeIsValid(response.data.access_token)){
+        //     AppStorage.store(response.data.user,response.data.access_token)
+        //     window.location.assign('/forum')}
+        _this.sotreAfterResponse(res);
+      })["catch"](function (error) {
         console.log('fuck you');
       });
     }

@@ -47,22 +47,23 @@ export default {
     },
     methods : {
         login(){
-            let myemail = this.user.email
-            let mypass = this.user.password
-            axios({
-                method: 'post',
-                url: '/api/auth/login',
-                data: {
-                    email: myemail,
-                    password: mypass
-                }
-            })
-            .then(res => 
-                console.log(res.data) 
-            )
-            .catch(function (error) {
-                console.log('fuck you');
-            });
+            // let myemail = this.user.email
+            // let mypass = this.user.password
+            // axios({
+            //     method: 'post',
+            //     url: '/api/auth/login',
+            //     data: {
+            //         email: myemail,
+            //         password: mypass
+            //     }
+            // })
+            // .then(res => 
+            //     console.log(res.data) 
+            // )
+            // .catch(function (error) {
+            //     console.log('fuck you');
+            // });
+            User.login(this.user)
         }
     }
 }

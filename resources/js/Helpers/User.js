@@ -2,8 +2,8 @@ import Token from "./Token";
 import AppStorage from './AppStorage'
 class User{
     login(user){
-        let myemail = this.user.email
-            let mypass = this.user.password
+        let myemail = user.email
+            let mypass = user.password
             axios({
                 method: 'post',
                 url: '/api/auth/login',
@@ -12,12 +12,12 @@ class User{
                     password: mypass
                 }
             })
-            .then(res => 
-                console.log(res.data) 
-                // if (Token.completeIsValid(response.data.access_token)) {
+            .then(res => {
+                // if (Token.completeIsValid(response.data.access_token)){
                 //     AppStorage.store(response.data.user,response.data.access_token)
-                    // window.location.assign('/forum')
-            )
+                //     window.location.assign('/forum')}
+                this.sotreAfterResponse(res)
+            })
             .catch(function (error) {
                 console.log('fuck you');
             });

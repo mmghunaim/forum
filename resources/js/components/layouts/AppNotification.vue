@@ -29,7 +29,8 @@ export default {
         return {
             read : {},
             unread : {},
-            unreadCount : 0
+            unreadCount : 0,
+            sound  : "http://soundbible.com/mp3/Clinking_Teaspoon-Simon_Craggs-59102891.mp3"
         }
     },
     created() {
@@ -39,6 +40,7 @@ export default {
 
         Echo.private('App.User.' + User.userId())
             .notification((notification) => {
+                this.playSound()
                 this.unread.unshift(notification)
                 this.unreadCount++
             });
@@ -60,11 +62,16 @@ export default {
             .catch(err => Exception.handle(error))
         },
         markAsRead(notify){
-        axios.post('/api/markAsRead/',notify)
-        .then(res => {
-            this.getNotifications()
-        })
-    }
+            axios.post('/api/markAsRead/',notify)
+            .then(res => {
+                this.getNotifications()
+            })
+        },
+        playSound(){
+            let alert = new Audio(this.sound)
+
+            alert.play()
+        }
     }
 }
 </script>

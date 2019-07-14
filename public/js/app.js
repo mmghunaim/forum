@@ -1779,7 +1779,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       read: {},
       unread: {},
-      unreadCount: 0
+      unreadCount: 0,
+      sound: "http://soundbible.com/mp3/Clinking_Teaspoon-Simon_Craggs-59102891.mp3"
     };
   },
   created: function created() {
@@ -1790,6 +1791,8 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     Echo["private"]('App.User.' + User.userId()).notification(function (notification) {
+      _this.playSound();
+
       _this.unread.unshift(notification);
 
       _this.unreadCount++;
@@ -1818,6 +1821,10 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/api/markAsRead/', notify).then(function (res) {
         _this3.getNotifications();
       });
+    },
+    playSound: function playSound() {
+      var alert = new Audio(this.sound);
+      alert.play();
     }
   }
 });

@@ -54,9 +54,9 @@ window.Echo = new Echo({
     cluster: "ap2",
     encrypted: true,
     auth: {
-        headers : {
-            Authorization : JWTtoken
-        }
-    }
+        headers: {
+            Authorization: JWTtoken
+        },
+    },
 });
 

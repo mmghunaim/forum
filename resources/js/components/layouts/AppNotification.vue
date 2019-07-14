@@ -57,7 +57,7 @@ export default {
                 this.unreadCount = res.data.unread.length
                 
             })
-            .catch(err => console.log(err))
+            .catch(err => Exception.handle(error))
         },
         markAsRead(notify){
         axios.post('/api/markAsRead/',notify)

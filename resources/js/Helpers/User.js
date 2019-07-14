@@ -37,6 +37,8 @@ class User{
         if (storedToken) {
             if (Token.completeIsValid(storedToken)) {
                 return true
+            }else{
+                this.logout()
             }
         }
         return false

@@ -29,6 +29,7 @@ export default {
             .notification((notification) => {
                 this.replyItself.unshift(notification.reply)
             });
+            
 
             Echo.channel('deleteReplyChannel')
             .listen('.DeleteReplyEvent',(e)=>{

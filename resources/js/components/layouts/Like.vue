@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-btn icon="" @click="like">
+        <v-btn icon="" @click="like" v-if="isLoggedIn">
             <v-icon :color="color">favorite</v-icon>{{count}}
         </v-btn>
     </div>
@@ -12,7 +12,8 @@ export default {
     data() {
         return {
             isLiked : this.reply.liked,
-            count : this.reply.like_count
+            count : this.reply.like_count,
+            isLoggedIn : User.isLoggedIn()
         }
     },
     created(){
@@ -22,8 +23,6 @@ export default {
                 e.type == 1 ? this.count++ : this.count--
             }
         });
-        console.log('fuck');
-        
     },
     computed:{
         color(){

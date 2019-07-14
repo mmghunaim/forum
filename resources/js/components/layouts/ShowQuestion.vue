@@ -11,7 +11,7 @@
                     </span>
                 </div>
                 <v-spacer></v-spacer>
-                <v-btn color="teal" dark>{{data.replies_count}} comment</v-btn>
+                <v-btn color="teal" dark>{{replyCount}} comment</v-btn>
             </v-card-title>
             <v-card-text v-html="body"></v-card-text>
             
@@ -33,13 +33,31 @@ export default {
     props : ['data'],
     data() {
         return {
-            own : User.own(this.data.user_id)
+            own : User.own(this.data.user_id),
+            replyCount : this.data.replies_count
         }
     },
     computed:{
         body(){
             return md.parse(this.data.body)
         }
+    },
+    created() {
+        eventBus.$on('commentCreated',data=>{
+            this.replyCount++
+        })
+
+        Echo.private('App.User.' + User.userId())
+        .notification((notification) => {
+            this.replyCount++
+        });
+        eventBus.$on('deleteReplySuccess',data=>{
+            this.replyCount--
+        })
+        Echo.channel('deleteReplyChannel')
+        .listen('.DeleteReplyEvent',(e)=>{
+            this.replyCount--          
+        })
     },
     methods: {
         deleteQuestion(){

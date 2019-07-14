@@ -3,7 +3,10 @@
         <editquestion v-if="edit" :data = question ></editquestion>
         <showquestion v-else :data = question ></showquestion>
         <replies :QuestionReplies = question></replies>
-        <newreply :questionslug = question.slug></newreply>
+        <newreply :questionslug = question.slug v-if="loggedIn"></newreply>
+        <v-container v-else>
+            <router-link to="/login">Login to reply</router-link>
+        </v-container>
     </div>
 </template>
 
@@ -22,12 +25,14 @@ export default {
     data() {
         return {
             question : null,
-            edit : false
+            edit : false,
+            loggedIn : User.isLoggedIn()
         }
     },
     created() {
         this.getSingleQuestion()
         this.listenToEdit()
+
     },
     methods: {
         getSingleQuestion(){
